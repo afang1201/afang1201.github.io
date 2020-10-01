@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Hello World |  
+     
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -47,33 +47,24 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-hello-world"
+  id="post-vuex"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
   data-scroll-reveal
 >
   <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Hello World
-</h1>
- 
-
-    </header>
      
     <div class="article-meta">
-      <a href="/2020/10/01/hello-world/" class="article-date">
-  <time datetime="2020-10-01T05:32:27.385Z" itemprop="datePublished">2020-10-01</time>
+      <a href="/2020/10/01/vuex/" class="article-date">
+  <time datetime="2020-10-01T09:39:54.798Z" itemprop="datePublished">2020-10-01</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">75</span>
+            <span class="post-count">412</span>
         </span>
     </span>
 
@@ -82,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">2 min</span>
         </span>
     </span>
 </div>
@@ -97,19 +88,23 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+  <h1 id="vuex"><a href="#vuex" class="headerlink" title="vuex"></a>vuex</h1><p>官网：<a target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh/">https://vuex.vuejs.org/zh/</a></p>
+<h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h3><p>Vuex 是一个专为 Vue.js 应用程序开发的<strong>状态管理模式</strong>。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。</p>
+<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h3><p>1.安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i vuex --save</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>2.src/store/index.js 创建仓库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">&quot;vuex&quot;</span></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    <span class="comment">//状态 数据</span></span><br><span class="line">    state: &#123;</span><br><span class="line">        name: <span class="string">&quot;妲己&quot;</span>,</span><br><span class="line">        age: <span class="number">20</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//修改state</span></span><br><span class="line">    mutations: &#123;</span><br><span class="line">        changeWang(state) &#123;</span><br><span class="line">            state.name = <span class="string">&quot;王昭君&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        change50(state) &#123;</span><br><span class="line">            state.age = <span class="number">50</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">     <span class="comment">// 接收组件的触发的动作，可以处理异步，但是不能修改state，最后会commit到mutations</span></span><br><span class="line">    actions:&#123;</span><br><span class="line">        <span class="comment">//context 就是你的仓库本身，是个只读的</span></span><br><span class="line">        changeWang(context)&#123;</span><br><span class="line">            context.commit(<span class="string">&#x27;changeWang&#x27;</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        changeName(context,name)&#123;</span><br><span class="line">            context.commit(<span class="string">&quot;changeName&quot;</span>,name)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>3.main.js引入，挂到vue根实例上</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;./store&quot;</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">  router,</span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">  template: <span class="string">&#x27;&lt;App/&gt;&#x27;</span>,</span><br><span class="line">  <span class="comment">//仓库</span></span><br><span class="line">  store</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>4.组件取数据，调方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;name:&#123;&#123;$store.state.name&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;p&gt;age:&#123;&#123;$store.state.age&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;button @click&#x3D;&quot;$store.commit(&#39;changeWang&#39;)&quot;&gt;王昭君&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button @click&#x3D;&quot;$store.dispatch(&#39;changeWang&#39;)&quot;&gt;action 王昭君&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button @click&#x3D;&quot;$store.dispatch(&#39;changeName&#39;,&#39;杨玉环&#39;)&quot;&gt;action 杨玉环&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>1.mutations VS actions</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.mutations 只能处理同步，action可以处理异步</span><br><span class="line">2.触发mutations通过commit,触发actions通过dispatch</span><br><span class="line">3.mutations用来修改state,actions用来接收组件派发的动作</span><br></pre></td></tr></table></figure>
+
  
       <!-- reward -->
       
@@ -180,7 +175,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2020/10/01/hello-world/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2020/10/01/vuex/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -189,6 +184,16 @@
   </div>
 
    
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/10/01/%E5%8D%9A%E5%AE%A2%E5%90%8D%E5%AD%97/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">阿方</div>
+      </a>
+    
+  </nav>
+
    
 <!-- valine评论 -->
 <div id="vcomments-box">
