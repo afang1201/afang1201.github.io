@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="jQuery对表单的操作及更多应用, ">
+    <meta name="keywords" content="Vuex, ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,8 +16,8 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>jQuery对表单的操作及更多应用 | </title>
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Vuex | </title>
+    <link rel="icon" type="image/png" href="/medias/logo.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
@@ -29,15 +29,157 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.2.0"></head>
+<style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+    
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+    
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+    
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+    
+   
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//强制显示loading page 1s  
+    };
+    loaded();
+})()
+ </script><meta name="generator" content="Hexo 5.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
-<body>
+
+ <div id="loading-container">
+     <p class="loading-text">玩命加载中 . . . </p> 
+     <div class="loading-image">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div> 
+         <div></div>
+     </div>
+ </div><body>
     <header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
                 <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
                     <span class="logo-span"></span>
                 </a>
@@ -146,6 +288,8 @@
 <div id="mobile-nav" class="side-nav sidenav">
 
     <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
         <div class="logo-name"></div>
         <div class="logo-desc">
@@ -326,12 +470,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">jQuery对表单的操作及更多应用</h1>
+                    <h1 class="description center-align post-title">Vuex</h1>
                 </div>
             </div>
         </div>
@@ -486,12 +630,32 @@
                 
 
                 
-
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-10-02
+                </div>
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    516
+                </div>
+                
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    2 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
             </div>
         </div>
         <hr class="clearfix">
@@ -500,19 +664,19 @@
                 <h1 id="vuex"><a href="#vuex" class="headerlink" title="vuex"></a>vuex</h1><p>官网：<a target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh/">https://vuex.vuejs.org/zh/</a></p>
 <h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h3><p>Vuex 是一个专为 Vue.js 应用程序开发的<strong>状态管理模式</strong>。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。</p>
 <h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h3><p>1.安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i vuex --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre class=" language-hljs ada">npm i vuex <span class="hljs-comment"><code class="language-hljs ada">npm i vuex <span class="hljs-comment">--save</span><br></code></pre></td></tr></table></figure>
 
 <p>2.src/store/index.js 创建仓库</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">&quot;vuex&quot;</span></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    <span class="comment">//状态 数据</span></span><br><span class="line">    state: &#123;</span><br><span class="line">        name: <span class="string">&quot;妲己&quot;</span>,</span><br><span class="line">        age: <span class="number">20</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//修改state</span></span><br><span class="line">    mutations: &#123;</span><br><span class="line">        changeWang(state) &#123;</span><br><span class="line">            state.name = <span class="string">&quot;王昭君&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        change50(state) &#123;</span><br><span class="line">            state.age = <span class="number">50</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">     <span class="comment">// 接收组件的触发的动作，可以处理异步，但是不能修改state，最后会commit到mutations</span></span><br><span class="line">    actions:&#123;</span><br><span class="line">        <span class="comment">//context 就是你的仓库本身，是个只读的</span></span><br><span class="line">        changeWang(context)&#123;</span><br><span class="line">            context.commit(<span class="string">&#x27;changeWang&#x27;</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        changeName(context,name)&#123;</span><br><span class="line">            context.commit(<span class="string">&quot;changeName&quot;</span>,name)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre class=" language-hljs js"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">import</span> Vuex <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vuex&quot;</span><br>Vue.use(Vuex)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">new</span> Vuex.Store(&#123;<br>    <span class="hljs-comment">//状态 数据</span><br>    state: &#123;<br>        name: <span class="hljs-string">&quot;妲己&quot;</span>,<br>        age: <span class="hljs-number">20</span><br>    &#125;,<br>    <span class="hljs-comment">//修改state</span><br>    mutations: &#123;<br>        changeWang(state) &#123;<br>            state.name = <span class="hljs-string">&quot;王昭君&quot;</span><br>        &#125;,<br>        change50(state) &#123;<br>            state.age = <span class="hljs-number">50</span><br>        &#125;<br>    &#125;,<br>     <span class="hljs-comment">// 接收组件的触发的动作，可以处理异步，但是不能修改state，最后会commit到mutations</span><br>    actions:&#123;<br>        <span class="hljs-comment">//context 就是你的仓库本身，是个只读的</span><br>        changeWang(context)&#123;<br>            context.commit(<span class="hljs-string">&#x27;changeWang&#x27;</span>)<br>        &#125;,<br>        changeName(context,name)&#123;<br>            context.commit(<span class="hljs-string"><code class="language-hljs js"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">import</span> Vuex <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vuex&quot;</span><br>Vue.use(Vuex)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">new</span> Vuex.Store(&#123;<br>    <span class="hljs-comment">//状态 数据</span><br>    state: &#123;<br>        name: <span class="hljs-string">&quot;妲己&quot;</span>,<br>        age: <span class="hljs-number">20</span><br>    &#125;,<br>    <span class="hljs-comment">//修改state</span><br>    mutations: &#123;<br>        changeWang(state) &#123;<br>            state.name = <span class="hljs-string">&quot;王昭君&quot;</span><br>        &#125;,<br>        change50(state) &#123;<br>            state.age = <span class="hljs-number">50</span><br>        &#125;<br>    &#125;,<br>     <span class="hljs-comment">// 接收组件的触发的动作，可以处理异步，但是不能修改state，最后会commit到mutations</span><br>    actions:&#123;<br>        <span class="hljs-comment">//context 就是你的仓库本身，是个只读的</span><br>        changeWang(context)&#123;<br>            context.commit(<span class="hljs-string">&#x27;changeWang&#x27;</span>)<br>        &#125;,<br>        changeName(context,name)&#123;<br>            context.commit(<span class="hljs-string">"changeName"</span>,name)<br>        &#125;<br>    &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
 
 <p>3.main.js引入，挂到vue根实例上</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;./store&quot;</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">  router,</span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">  template: <span class="string">&#x27;&lt;App/&gt;&#x27;</span>,</span><br><span class="line">  <span class="comment">//仓库</span></span><br><span class="line">  store</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre class=" language-hljs js"><span class="hljs-keyword">import</span> store <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./store&quot;</span><br><span class="hljs-keyword">new</span> Vue(&#123;<br>  el: <span class="hljs-string">&#x27;#app&#x27;</span>,<br>  router,<br>  components: &#123; App &#125;,<br>  template: <span class="hljs-string">&#x27;&lt;App/&gt;&#x27;</span>,<br>  <span class="hljs-comment"><code class="language-hljs js"><span class="hljs-keyword">import</span> store <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./store&quot;</span><br><span class="hljs-keyword">new</span> Vue(&#123;<br>  el: <span class="hljs-string">&#x27;#app&#x27;</span>,<br>  router,<br>  components: &#123; App &#125;,<br>  template: <span class="hljs-string">&#x27;&lt;App/&gt;&#x27;</span>,<br>  <span class="hljs-comment">//仓库</span><br>  store<br>&#125;)<br><br></code></pre></td></tr></table></figure>
 
 <p>4.组件取数据，调方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;name:&#123;&#123;$store.state.name&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;p&gt;age:&#123;&#123;$store.state.age&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;button @click&#x3D;&quot;$store.commit(&#39;changeWang&#39;)&quot;&gt;王昭君&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button @click&#x3D;&quot;$store.dispatch(&#39;changeWang&#39;)&quot;&gt;action 王昭君&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button @click&#x3D;&quot;$store.dispatch(&#39;changeName&#39;,&#39;杨玉环&#39;)&quot;&gt;action 杨玉环&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre class=" language-hljs vue"><code class="language-hljs vue"><p>name:&#123;&#123;$store.state.name&#125;&#125;<&#x2F;p><br><p>age:&#123;&#123;$store.state.age&#125;&#125;<&#x2F;p><br><button @click&#x3D;"$store.commit('changeWang')">王昭君<&#x2F;button><br><button @click&#x3D;"$store.dispatch('changeWang')">action 王昭君<&#x2F;button><br><button @click&#x3D;"$store.dispatch('changeName','杨玉环')">action 杨玉环<&#x2F;button><br></code></pre></td></tr></table></figure>
 
 <h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>1.mutations VS actions</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.mutations 只能处理同步，action可以处理异步</span><br><span class="line">2.触发mutations通过commit,触发actions通过dispatch</span><br><span class="line">3.mutations用来修改state,actions用来接收组件派发的动作</span><br></pre></td></tr></table></figure>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre class=" language-hljs pf"><span class="hljs-number">1</span>.mutations 只能处理同步，action可以处理异步<br><span class="hljs-number">2</span>.触发mutations通过commit,触发actions通过dispatch<br><span class="hljs-number">3</span>.mutations用来修改<span class="hljs-keyword"><code class="language-hljs pf"><span class="hljs-number">1</span>.mutations 只能处理同步，action可以处理异步<br><span class="hljs-number">2</span>.触发mutations通过commit,触发actions通过dispatch<br><span class="hljs-number">3</span>.mutations用来修改<span class="hljs-keyword">state</span>,actions用来接收组件派发的动作<br></code></pre></td></tr></table></figure>
 
 
             </div>
@@ -799,9 +963,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="jQuery对表单的操作及更多应用">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Vuex">
                         
-                        <span class="card-title">jQuery对表单的操作及更多应用</span>
+                        <span class="card-title">Vuex</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1044,6 +1208,9 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">516</span>&nbsp;字
             
             
             
