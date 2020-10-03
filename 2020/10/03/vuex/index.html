@@ -1,0 +1,1787 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Vuex学习笔记, ">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Vuex学习笔记 | </title>
+    <link rel="icon" type="image/png" href="/medias/logo.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+    
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+    
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+    
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+    
+   
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//强制显示loading page 1s  
+    };
+    loaded();
+})()
+ </script><meta name="generator" content="Hexo 5.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+ <div id="loading-container">
+     <p class="loading-text">玩命加载中 . . . </p> 
+     <div class="loading-image">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div> 
+         <div></div>
+     </div>
+ </div><body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span"></span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/galleries" class="waves-effect waves-light">
+      
+      <i class="fas fa-image" style="zoom: 0.6;"></i>
+      
+      <span>相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name"></div>
+        <div class="logo-desc">
+            
+            山无棱，天地合，才敢与君绝。紫薇你终于来了！！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/galleries" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-image"></i>
+			
+			相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Vuex学习笔记</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Vuex/">
+                                <span class="chip bg-color">Vuex</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">学习笔记</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/web%E5%89%8D%E7%AB%AF/" class="post-category">
+                                web前端
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-10-03
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-10-03
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    8 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h1><p>官网：<a target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh/">https://vuex.vuejs.org/zh/</a></p>
+<h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h3><p>Vuex 是一个专为 Vue.js 应用程序开发的<strong>状态管理模式</strong>。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。</p>
+<h3 id="2-Vuex能够干什么"><a href="#2-Vuex能够干什么" class="headerlink" title="2.Vuex能够干什么"></a>2.Vuex能够干什么</h3><p>可以试想这样的场景, 比如一个Vue的根实例下面有一个根组件名为<code>App.vue</code>, 它下面有两个子组件<code>A.vue</code>和<code>B.vue</code>, <code>App.vue</code>想要与<code>A.vue</code>或者<code>B.vue</code>通讯可以通过父子通讯props传值的方式, 但是如果<code>A.vue</code>和<code>B.vue</code>之间的通讯就很麻烦了, 他们需要共有的父组件通过<strong>自定义事件</strong>进行实现, A组件想要和B组件通讯往往是这样的:</p>
+<p>1.在Vue 的 prototype上挂载了一个Event属性，该Event 属性指向一个 Vue 的实例</p>
+<p>2.A组件说: “报告爸爸, 能否帮我托个信给弟弟B” =&gt;通过Event 触发一个事件给App</p>
+<p>2.App爸爸说: “没问题包在我身上, 我需要监听A组件的触发的时间, 然后分发这个事件给B组件”</p>
+<p>3.弟弟B说: “信息已收到”, 我只需要借助声明周期钩子来监听App爸爸分发的事件</p>
+<p>具体实现代码如下</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//main.js挂载Event属性</span>
+<span class="token class-name">Vue</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>Event<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//组件A在函数方法中通过Event属性触发自定义事件sendA</span>
+methods<span class="token operator">:</span><span class="token punctuation">&#123;</span>
+    <span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>Event<span class="token punctuation">.</span><span class="token function">$emit</span><span class="token punctuation">(</span><span class="token string">'sendA'</span><span class="token punctuation">,</span><span class="token string">'弟弟吃了吗'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+ <span class="token comment">//组件B借助声明周期钩子监听父组件派发的自定义事件sendA </span>
+    <span class="token function">mounted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>Event<span class="token punctuation">.</span><span class="token function">$on</span><span class="token punctuation">(</span><span class="token string">"sendA"</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>当然这只是两个兄弟之间的简单传递，如果涉及到更多那么之间的逻辑关系就会更加复杂，那有没有什么好的解决方式呢，这时候Vuex的作用就体现了出来，下面是我对Vuex核心概念的一些理解。</p>
+<h3 id="3-Vuex核心概念"><a href="#3-Vuex核心概念" class="headerlink" title="3.Vuex核心概念"></a>3.Vuex核心概念</h3><h4 id="1-State"><a href="#1-State" class="headerlink" title="1.State"></a>1.State</h4><p><code>state</code>就是Vuex中的公共的状态, 可以将<code>state</code>看作是所有组件的<code>data</code>, 用于保存所有组件的公共数据.</p>
+<p>这里的话借助一个demo进行展示</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//App.vue设置两个组件A，B</span>
+<span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>div<span class="token operator">></span>
+    <span class="token operator">&lt;</span>v<span class="token operator">-</span>a<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>v<span class="token operator">-</span>a<span class="token operator">></span>
+    <span class="token operator">&lt;</span>v<span class="token operator">-</span>b<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>v<span class="token operator">-</span>b<span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+
+<span class="token comment">//A组件代码块</span>
+<span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"box"</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span>h1<span class="token operator">></span><span class="token keyword">this</span> is <span class="token constant">A</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>name<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>age<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>age<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+
+<span class="token comment">//B组件代码块</span>
+<span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"box"</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span>h1<span class="token operator">></span><span class="token keyword">this</span> is <span class="token constant">B</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>name<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>age<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>age<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//main.js设置Vuex</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">//状态 数据</span>
+    state<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        name<span class="token operator">:</span> <span class="token string">"妲己"</span><span class="token punctuation">,</span>
+        age<span class="token operator">:</span> <span class="token number">20</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>此时页面效果如下图所示</p>
+<ul>
+<li><img src="data:image/png;base64,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" alt="avatar"></li>
+</ul>
+<h4 id="2-Getters"><a href="#2-Getters" class="headerlink" title="2.Getters"></a>2.Getters</h4><p>可以将<code>getters</code>属性理解为所有组件的<code>computed</code>属性, 也就是计算属性. vuex的官方文档也是说到可以将getter理解为store的计算属性, getters的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。</p>
+<p>可以为vuex添加getters代码段</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"> <span class="token comment">//main.js设置Vuex</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">//状态 数据</span>
+    state<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        name<span class="token operator">:</span> <span class="token string">"妲己"</span><span class="token punctuation">,</span>
+        age<span class="token operator">:</span> <span class="token number">20</span>
+    <span class="token punctuation">&#125;</span>，
+    <span class="token comment">//相当于计算属性，目的为了导出数据给组件使用</span>
+    getters<span class="token operator">:</span><span class="token punctuation">&#123;</span>
+        <span class="token function">name</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">.</span>name
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token function">age</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> state<span class="token punctuation">.</span>age<span class="token operator">*</span><span class="token number">2</span>
+        <span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>更改AB组件代码块为</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//A组件代码块</span>
+<span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"box"</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span>h1<span class="token operator">></span><span class="token keyword">this</span> is <span class="token constant">A</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+		<span class="token comment">//A组件不作修改作为参照</span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>name<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>age<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>age<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+<span class="token comment">//B组件代码块</span>
+<span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"box"</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span>h1<span class="token operator">></span><span class="token keyword">this</span> is <span class="token constant">B</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+		<span class="token comment">//$store.state.name改为了$store.getters.name</span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>name<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>age<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">.</span>age<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>此时页面效果为</p>
+<p><img src="data:image/png;base64,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" alt="avatar"></p>
+<p>此时B组件的age变为了A组件的2倍</p>
+<h4 id="3-mutations"><a href="#3-mutations" class="headerlink" title="3. mutations"></a>3. mutations</h4><p>可以将<code>mutaions</code>理解为<code>store</code>中的<code>methods</code>, <code>mutations</code>对象中保存着更改数据的回调函数,该函数名官方规定叫<code>type</code>, 第一个参数是<code>state</code>, 第二参数是<code>payload</code>, 也就是自定义的参数.</p>
+<p>下面,我在<code>main.js</code>中添加<code>mutations</code>属性,其中changeName这个回调函数用于name的改变</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//main.js设置Vuex</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">//状态 数据</span>
+    state<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        name<span class="token operator">:</span> <span class="token string">"妲己"</span><span class="token punctuation">,</span>
+        age<span class="token operator">:</span> <span class="token number">20</span>
+    <span class="token punctuation">&#125;</span>，
+    <span class="token comment">//相当于计算属性，目的为了导出数据给组件使用</span>
+    getters<span class="token operator">:</span><span class="token punctuation">&#123;</span>
+        <span class="token function">name</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">.</span>name
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token function">age</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> state<span class="token punctuation">.</span>age<span class="token operator">*</span><span class="token number">2</span>
+        <span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>，
+     <span class="token comment">//直接修改state</span>
+    mutations<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">changeName</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span> name</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            state<span class="token punctuation">.</span>name <span class="token operator">=</span> name
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在A组件<code>中添加一个按钮,为其添加一个点击事件, 给点击事件触发</code>changeName方法</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//A组件代码块</span>
+<span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"box"</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span>h1<span class="token operator">></span><span class="token keyword">this</span> is <span class="token constant">A</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>name<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>age<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>age<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+  	  <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"$store.commit('changeName','貂蝉')"</span><span class="token operator">></span>貂蝉<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>点击按钮后页面效果如下</p>
+<p><img src="data:image/png;base64,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" alt="avatar"></p>
+<h4 id="4-Actions"><a href="#4-Actions" class="headerlink" title="4.Actions"></a>4.Actions</h4><p><code>actions</code> 类似于 <code>mutations</code>，不同在于：</p>
+<ul>
+<li><code>actions</code>提交的是<code>mutations</code>而不是直接变更状态</li>
+<li><code>actions</code>中可以包含异步操作, <code>mutations</code>中绝对不允许出现异步</li>
+<li><code>actions</code>中的回调函数的第一个参数是<code>context</code>, 是一个与<code>store</code>实例具有相同属性和方法的对象</li>
+<li>此时,我们在<code>store</code>中添加<code>actions</code>属性, 其中<code>changeNameAsync</code>采用<code>setTimeout</code>来模拟异步操作,延迟2s执行 该方法用于异步改变我们刚才在<code>mutaions</code>中定义的name</li>
+</ul>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//main.js设置Vuex</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">//状态 数据</span>
+    state<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        name<span class="token operator">:</span> <span class="token string">"妲己"</span><span class="token punctuation">,</span>
+        age<span class="token operator">:</span> <span class="token number">20</span>
+    <span class="token punctuation">&#125;</span>，
+    <span class="token comment">//相当于计算属性，目的为了导出数据给组件使用</span>
+    getters<span class="token operator">:</span><span class="token punctuation">&#123;</span>
+        <span class="token function">name</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">.</span>name
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token function">age</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> state<span class="token punctuation">.</span>age<span class="token operator">*</span><span class="token number">2</span>
+        <span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>，
+     <span class="token comment">//直接修改state</span>
+    mutations<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">changeName</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span> name</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            state<span class="token punctuation">.</span>name <span class="token operator">=</span> name
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+     <span class="token comment">// 接收组件的触发的动作，可以处理异步，但是不能修改state，最后会commit到mutations</span>
+    actions<span class="token operator">:</span><span class="token punctuation">&#123;</span>
+        <span class="token comment">//context 就是你的仓库本身，是个只读的</span>
+        <span class="token function">changeNameAsync</span><span class="token punctuation">(</span><span class="token parameter">context<span class="token punctuation">,</span>name</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+                context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span> <span class="token string">'changeName'</span><span class="token punctuation">,</span> name <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//context提交</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在A组件<code>中添加一个按钮,为其添加一个点击事件, 给点击事件触发</code>changeNameAsync方法</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//A组件代码块</span>
+<span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"box"</span><span class="token operator">></span>
+      <span class="token operator">&lt;</span>h1<span class="token operator">></span><span class="token keyword">this</span> is <span class="token constant">A</span><span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>name<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span>age<span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>age<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
+  	  <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"$store.commit('changeName','貂蝉')"</span><span class="token operator">></span>貂蝉<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+  	   <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"$store.dispatch('changeNameAsync','王昭君')"</span><span class="token operator">></span>action 王昭君<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>点击action按钮后两秒以后的页面效果</p>
+<p><img src="data:image/png;base64,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" alt="avatar"></p>
+<h4 id="5-Modules"><a href="#5-Modules" class="headerlink" title="5.Modules"></a>5.Modules</h4><p>由于使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store 对象就有可能变得相当臃肿。为了解决以上问题，Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> moduleA <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  state<span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  mutations<span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  actions<span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  getters<span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">const</span> moduleB <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  state<span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  mutations<span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  actions<span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  modules<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    a<span class="token operator">:</span> moduleA<span class="token punctuation">,</span>
+    b<span class="token operator">:</span> moduleB
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>a <span class="token comment">// -> moduleA 的状态</span>
+store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>b <span class="token comment">// -> moduleB 的状态</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>1.mutations VS actions</p>
+<pre class="line-numbers language-none"><code class="language-none">1.mutations 只能处理同步，action可以处理异步
+2.触发mutations通过commit,触发actions通过dispatch
+3.mutations用来修改state,actions用来接收组件派发的动作<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>参考博客：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a804606ad8e9">https://www.jianshu.com/p/a804606ad8e9</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">a Fang</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://example.com/2020/10/03/vuex/">http://example.com/2020/10/03/vuex/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">a Fang</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Vuex/">
+                                    <span class="chip bg-color">Vuex</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">学习笔记</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'VApLoVt1SesksIeXqgkDhVkM-gzGzoHsz',
+        appKey: 'wJ0tv8s5jcQRzIFtgRme3GeC',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/10/03/%E5%85%B3%E4%BA%8Emarkdown%E6%8F%92base64%E6%A0%BC%E5%BC%8F%E5%9B%BE%E7%89%87%E4%B8%8D%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="关于markdown插入base64格式图片不显示的问题">
+                        
+                        <span class="card-title">关于markdown插入base64格式图片不显示的问题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-03
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%B7%A5%E5%85%B7%E7%B1%BB/" class="post-category">
+                                    工具类
+                                </a>
+                            
+                            <a href="/categories/%E5%B7%A5%E5%85%B7%E7%B1%BB/markdown/" class="post-category">
+                                    markdown
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%B8%A9%E5%9D%91%E9%97%AE%E9%A2%98/">
+                        <span class="chip bg-color">踩坑问题</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/10/01/%E5%8D%9A%E5%AE%A2%E5%90%8D%E5%AD%97/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="阿方">
+                        
+                        <span class="card-title">阿方</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            a Fang
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="5266613665"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">a Fang</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">2.3k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "10";
+                    var startDate = "1";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/afang1201" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1972836617@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1972836617" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1972836617" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
