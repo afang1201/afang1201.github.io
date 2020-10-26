@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="“$route和$router的区别”, ">
+    <meta name="keywords" content="vue路由, ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>“$route和$router的区别” | </title>
+    <title>vue路由 | </title>
     <link rel="icon" type="image/png" href="/medias/logo.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -407,12 +407,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">“$route和$router的区别”</h1>
+                    <h1 class="description center-align post-title">vue路由</h1>
                 </div>
             </div>
         </div>
@@ -529,6 +529,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E8%B7%AF%E7%94%B1/">
+                                <span class="chip bg-color">路由</span>
+                            </a>
+                        
                             <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                 <span class="chip bg-color">学习笔记</span>
                             </a>
@@ -554,28 +558,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-10-08
+                    2020-10-24
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-10-09
+                    2020-10-26
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    531
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    6 分
                 </div>
                 
 
@@ -585,69 +589,154 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="一、使用场景"><a href="#一、使用场景" class="headerlink" title="一、使用场景"></a>一、使用场景</h3><p>首先说一下$router和$route的使用场景吧</p>
-<h5 id="1-router"><a href="#1-router" class="headerlink" title="1.$router"></a>1.$router</h5><p>router为VueRouter的实例，相当于一个全局的路由器对象，里面含有很多属性和子对象。主要用于页面的跳转。</p>
-<p>关于$router最经常用的两个方法分别是push和replace虽然两者都能实现页面的跳转功能，但是还是存在一些细微的差异。</p>
-<p>其中$router.push({path:’home’});本质是向history栈中添加一个路由，也就是添加一个history记录，我们可以通过浏览器后退返回上个路由页面。</p>
-<p>而$router.replace({path:’home’});则是替换路由，没有历史记录，后退将会离开该页面进入该页面的上级页面。</p>
-<h5 id="2-route"><a href="#2-route" class="headerlink" title="2.$route"></a>2.$route</h5><p>route是一个跳转的路由对象，每一个路由都会有一个route对象，是一个局部的对象，可以获取对应的name,path,params,query等</p>
-<p><img src="data:image/png;base64,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"></p>
-<ul>
-<li><p>$route.path<br>字符串，等于当前路由对象的路径，会被解析为绝对路径，如 <code>&quot;/home/news&quot;</code> 。</p>
+                <h4 id="1-路由导航"><a href="#1-路由导航" class="headerlink" title="1.路由导航"></a>1.路由导航</h4><h5 id="1-1-router-link"><a href="#1-1-router-link" class="headerlink" title="1.1 router-link"></a>1.1 router-link</h5><pre class="line-numbers language-vue" data-language="vue"><code class="language-vue">&#x2F;&#x2F; 字符串
+&lt;router-link to&#x3D;&quot;&#x2F;apple&quot;&gt; to apple&lt;&#x2F;router-link&gt;
+&#x2F;&#x2F; 对象
+&lt;router-link :to&#x3D;&quot;&#123;path:&#39;&#x2F;apple&#39;&#125;&quot;&gt; to apple&lt;&#x2F;router-link&gt;
+&#x2F;&#x2F; 命名路由
+&lt;router-link :to&#x3D;&quot;&#123;name: &#39;applename&#39;&#125;&quot;&gt; to apple&lt;&#x2F;router-link&gt;
+&#x2F;&#x2F;直接路由带查询参数query，地址栏变成 &#x2F;apple?color&#x3D;red
+&lt;router-link :to&#x3D;&quot;&#123;path: &#39;&#x2F;apple&#39;, query: &#123;color: &#39;red&#39; &#125;&#125;&quot;&gt; to apple&lt;&#x2F;router-link&gt;
+&#x2F;&#x2F; 命名路由带查询参数query，地址栏变成&#x2F;apple?color&#x3D;red
+&lt;router-link :to&#x3D;&quot;&#123;name: &#39;applename&#39;, query: &#123;color: &#39;red&#39; &#125;&#125;&quot;&gt; to apple&lt;&#x2F;router-link&gt;
+&#x2F;&#x2F;直接路由带路由参数params，params 不生效，如果提供了 path，params 会被忽略
+&lt;router-link :to&#x3D;&quot;&#123;path: &#39;&#x2F;apple&#39;, params: &#123; color: &#39;red&#39; &#125;&#125;&quot;&gt; to apple&lt;&#x2F;router-link&gt;
+&#x2F;&#x2F; 命名路由带路由参数params，地址栏是&#x2F;apple&#x2F;red
+&lt;router-link :to&#x3D;&quot;&#123;name: &#39;applename&#39;, params: &#123; color: &#39;red&#39; &#125;&#125;&quot;&gt; to apple&lt;&#x2F;router-link&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里说明一下路由参数query和params的区别</p>
+<ol>
+<li><p>传参可以使用params和query两种方式。</p>
 </li>
-<li><p>$route.params<br>对象，包含路由中的动态片段和全匹配片段的键值对</p>
-<p>可以通过代码段来进行理解</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//router >> index.js</span>
-
-<span class="token punctuation">&#123;</span>
-<span class="token comment">//意思就是往 Vue.$route.params里储存属性"name"和"age",作为键名key,</span>
-        path<span class="token operator">:</span> <span class="token string">'/index/:name/:age'</span><span class="token punctuation">,</span>
-        name<span class="token operator">:</span> <span class="token string">'index'</span><span class="token punctuation">,</span>
-        component<span class="token operator">:</span> index
-
-    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<li><p><strong>使用params传参只能用name来引入路由</strong>，即push里面只能是name:’xxxx’,不能是path:’/xxx’,因为params只能用name来引入路由，如果这里写成了path，接收参数页面会是undefined！！！。</p>
+<p>（这里补充一下路由的name属性，即可以在声明路由路径是给路由起名字具体代码如下）</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span>
+      path<span class="token operator">:</span> <span class="token string">"/apple"</span><span class="token punctuation">,</span>
+      component<span class="token operator">:</span> apple<span class="token punctuation">,</span>
+      name<span class="token operator">:</span><span class="token string">"applename"</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token comment">//当路由声明了name属性后可直接通过name属性实现跳转</span>
+ <span class="token operator">&lt;</span>router<span class="token operator">-</span>link <span class="token operator">:</span>to<span class="token operator">=</span><span class="token string">"&#123;name:'applename'&#125;"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>router<span class="token operator">-</span>link<span class="token operator">></span>
+<span class="token comment">//效果与&lt;router-link :to="&#123;path:'/apple'&#125;">&lt;/router-link>相同</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
 </li>
-</ul>
-  <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//App.vue</span>
-<span class="token comment">//点击就跳转到index,并同时传参到Vue.$route.params</span>
-<span class="token operator">&lt;</span>router<span class="token operator">-</span>link to<span class="token operator">=</span><span class="token string">'/index/a/18'</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>router<span class="token operator">-</span>link<span class="token operator">></span>
-          
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</ol>
+<ol start="3">
+<li><p>使用query传参使用path来引入路由。</p>
+</li>
+<li><p>params是路由的一部分,必须要在路由后面添加参数名（**带路由参数params时，路由map里的path应该写成: path:’/apple/:color’ ;**）。query是拼接在url后面的参数，没有也没关系。</p>
+</li>
+<li><p>二者还有点区别，直白的来说query相当于get请求，页面跳转的时候，可以在地址栏看到请求参数，而params相当于post请求，参数不会再地址栏中显示。</p>
+</li>
+</ol>
+<h5 id="1-2-编程式导航"><a href="#1-2-编程式导航" class="headerlink" title="1.2 编程式导航"></a>1.2 编程式导航</h5><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//是添加一条新的历史记录</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//是用新的历史记录替换当前历史记录。</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">go</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">//返回</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-  <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//index.vue</span>
-<span class="token operator">&lt;</span>template<span class="token operator">></span>
-<span class="token comment">//获得属性age的值</span>
-    <span class="token operator">&lt;</span>div<span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>$route<span class="token punctuation">.</span>params<span class="token punctuation">.</span>age<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>同样的规则也适用于router.replace(…)方法。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 字符串</span>
+router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'apple'</span><span class="token punctuation">)</span>
+<span class="token comment">// 对象</span>
+router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>path<span class="token operator">:</span><span class="token string">'apple'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">// 命名路由</span>
+router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>name<span class="token operator">:</span> <span class="token string">'applename'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//直接路由带查询参数query，地址栏变成 /apple?color=red</span>
+router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>path<span class="token operator">:</span> <span class="token string">'apple'</span><span class="token punctuation">,</span> query<span class="token operator">:</span> <span class="token punctuation">&#123;</span>color<span class="token operator">:</span> <span class="token string">'red'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">// 命名路由带查询参数query，地址栏变成/apple?color=red</span>
+router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>name<span class="token operator">:</span> <span class="token string">'applename'</span><span class="token punctuation">,</span> query<span class="token operator">:</span> <span class="token punctuation">&#123;</span>color<span class="token operator">:</span> <span class="token string">'red'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//直接路由带路由参数params，params 不生效，如果提供了 path，params 会被忽略</span>
+router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>path<span class="token operator">:</span><span class="token string">'applename'</span><span class="token punctuation">,</span> params<span class="token operator">:</span><span class="token punctuation">&#123;</span> color<span class="token operator">:</span> <span class="token string">'red'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">// 命名路由带路由参数params，地址栏是/apple/red</span>
+router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>name<span class="token operator">:</span><span class="token string">'applename'</span><span class="token punctuation">,</span> params<span class="token operator">:</span><span class="token punctuation">&#123;</span> color<span class="token operator">:</span> <span class="token string">'red'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>  同时还可以同过编程路由的方式进行传参</p>
-  <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>
+<h5 id="1-3-获取路由参数"><a href="#1-3-获取路由参数" class="headerlink" title="1.3 获取路由参数"></a>1.3 获取路由参数</h5><p>query传参通过 this.$route.query获取</p>
+<p>params传参通过this.$route.params获取</p>
+<h4 id="2-路由导航守卫"><a href="#2-路由导航守卫" class="headerlink" title="2.路由导航守卫"></a>2.路由导航守卫</h4><h5 id="2-1-全局守卫"><a href="#2-1-全局守卫" class="headerlink" title="2.1 全局守卫"></a>2.1 全局守卫</h5><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//回调函数中的参数，to：进入到哪个路由去，from：从哪个路由离开，next：函数，决定是否展示你要看到的路由页面</span>
+router<span class="token punctuation">.</span><span class="token function">beforeEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span><span class="token keyword">from</span><span class="token punctuation">,</span>next</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//全局后置钩子</span>
+router<span class="token punctuation">.</span><span class="token function">afterEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span><span class="token keyword">from</span></span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="2-2-组件守卫"><a href="#2-2-组件守卫" class="headerlink" title="2.2 组件守卫"></a>2.2 组件守卫</h5><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//到达这个组件时</span>
+<span class="token function-variable function">beforeRouteEnter</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span><span class="token keyword">from</span><span class="token punctuation">,</span>next</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token comment">//离开这个组件时</span>
+<span class="token function-variable function">beforeRouteLeave</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span><span class="token keyword">from</span><span class="token punctuation">,</span>next</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="2-3-路由独享的守卫"><a href="#2-3-路由独享的守卫" class="headerlink" title="2.3 路由独享的守卫"></a>2.3 路由独享的守卫</h5><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token function-variable function">beforeEnter</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span><span class="token keyword">from</span><span class="token punctuation">,</span>next</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="3-路由懒加载"><a href="#3-路由懒加载" class="headerlink" title="3 路由懒加载"></a>3 路由懒加载</h4><p><strong>为什么要是用懒加载？</strong></p>
+<p>为给客户更好的客户体验，首屏组件加载速度更快一些，解决白屏问题。</p>
+<p><strong>定义</strong></p>
+<p>懒加载简单来说就是延迟加载或按需加载，即在需要的时候的时候进行加载。</p>
+<p><strong>使用</strong></p>
+<p>常用的懒加载方式有两种：即使用<strong>vue异步组件</strong> 和 <strong>ES中的import</strong></p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//这是未使用懒加载的vue路由代码</span>
+<span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> Router <span class="token keyword">from</span> <span class="token string">'vue-router'</span>
+<span class="token keyword">import</span> HelloWorld <span class="token keyword">from</span> <span class="token string">'../components/HelloWorld'</span>
+
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Router<span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Router</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    routes<span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            path<span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+            name<span class="token operator">:</span> <span class="token string">'HelloWorld'</span><span class="token punctuation">,</span>
+            component<span class="token operator">:</span>HelloWorld
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//vue异步组件实现懒加载</span>
+<span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> Router <span class="token keyword">from</span> <span class="token string">'vue-router'</span>
+　　<span class="token comment">/* 此处省去之前导入的HelloWorld模块 */</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Router<span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Router</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  routes<span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">&#123;</span>
-		path<span class="token operator">:</span><span class="token string">'/index'</span><span class="token punctuation">,</span>
-		name<span class="token operator">:</span><span class="token string">'index'</span><span class="token punctuation">,</span>
-		params<span class="token operator">:</span><span class="token punctuation">&#123;</span>
-			name<span class="token operator">:</span><span class="token string">'xx'</span><span class="token punctuation">,</span>
-			age<span class="token operator">:</span><span class="token string">'xx'</span>
-		<span class="token punctuation">&#125;</span>
-		
+      path<span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+      name<span class="token operator">:</span> <span class="token string">'HelloWorld'</span><span class="token punctuation">,</span>
+      <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token parameter">resolve</span><span class="token operator">=></span><span class="token punctuation">(</span><span class="token function">require</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"../components/HelloWorld"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>resolve<span class="token punctuation">)</span><span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">//ES 提出的import方法，（------最常用------）</span>
+<span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> Router <span class="token keyword">from</span> <span class="token string">'vue-router'</span>
 
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Router<span class="token punctuation">)</span>
 
-<ul>
-<li><p>$route.query<br>对象，包含路由中查询参数的键值对。例如，对于 <code>/home/news/detail/01?favorite=yes</code> ，会得到<code>$route.query.favorite == &#39;yes&#39;</code> 。</p>
-</li>
-<li><p>$route.router<br>路由规则所属的路由器（以及其所属的组件）。</p>
-</li>
-<li><p>$route.matched<br>数组，包含当前匹配的路径中所包含的所有片段所对应的配置参数对象。</p>
-</li>
-<li><p>$route.name<br>当前路径的名字，如果没有使用具名路径，则名字为空。</p>
-</li>
-</ul>
+<span class="token keyword">const</span> <span class="token function-variable function">HelloWorld</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">"../components/HelloWorld"</span><span class="token punctuation">)</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Router</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  routes<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">&#123;</span>
+      path<span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+      name<span class="token operator">:</span> <span class="token string">'HelloWorld'</span><span class="token punctuation">,</span>
+      component<span class="token operator">:</span>HelloWorld
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="4-路由模式"><a href="#4-路由模式" class="headerlink" title="4 路由模式"></a>4 路由模式</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">new</span> <span class="token class-name">Router</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    mode<span class="token operator">:</span><span class="token string">"history"</span><span class="token punctuation">,</span><span class="token comment">//hash ,默认hash</span>
+	routes<span class="token operator">:</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>hash :</p>
+<pre class="line-numbers language-none"><code class="language-none">1.前进 后退 刷新 ok
+2.localhost:3000&#x2F;#&#x2F;movie  #&#x2F;movie 会出现在url中，但是不会出现在请求路径中，所以和后端路由没有冲突
+3.采用window.onhashchange 实现的<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>history:</p>
+<pre class="line-numbers language-none"><code class="language-none">1.前进 后退 ok,刷新 ，如果后端处理过一样的路由，就会直接出现数据，如果没有，就会出现404
+2.localhost;3000&#x2F;movie &#x2F;movie会出现在请求中，所以可能和后端路由冲突。
+3.采用的是HTML5提供的Interface 中pushState() replaceState()
+4.需要后端的配合<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 
             </div>
             <hr/>
@@ -673,7 +762,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2020/10/08/%E2%80%9C%E5%92%8C%E7%9A%84%E5%8C%BA%E5%88%AB%E2%80%9D/">http://example.com/2020/10/08/%E2%80%9C%E5%92%8C%E7%9A%84%E5%8C%BA%E5%88%AB%E2%80%9D/</a>
+                    <a href="http://example.com/2020/10/24/vue%E8%B7%AF%E7%94%B1/">http://example.com/2020/10/24/vue%E8%B7%AF%E7%94%B1/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -710,6 +799,10 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E8%B7%AF%E7%94%B1/">
+                                    <span class="chip bg-color">路由</span>
+                                </a>
                             
                                 <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                     <span class="chip bg-color">学习笔记</span>
@@ -1143,16 +1236,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/10/09/%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/">
+                <a href="/2020/10/24/vue%E8%B7%AF%E7%94%B1/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/a1.jpg" class="responsive-img" alt="数组常用方法">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="vue路由">
                         
-                        <span class="card-title">数组常用方法</span>
+                        <span class="card-title">vue路由</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1162,30 +1256,31 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/js/" class="post-category">
-                                    js
+                            <a href="/categories/vue/" class="post-category">
+                                    vue
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">学习笔记</span>
+                    <a href="/tags/%E8%B7%AF%E7%94%B1/">
+                        <span class="chip bg-color">路由</span>
                     </a>
                     
-                    <a href="/tags/%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">数组</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
                 </div>
@@ -1199,13 +1294,12 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/10/04/%E5%85%B3%E4%BA%8E%E5%9C%A8vue%E4%B8%ADimg%E8%BF%9B%E8%A1%8Csrc%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A%E5%9B%BE%E7%89%87%E4%B8%8D%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/">
+                <a href="/2020/10/10/vue%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/">
                     <div class="card-image">
                         
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="vue组件通信">
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="关于在vue中对img进行src属性绑定图片不显示的问题">
-                        
-                        <span class="card-title">关于在vue中对img进行src属性绑定图片不显示的问题</span>
+                        <span class="card-title">vue组件通信</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1216,7 +1310,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-10
                             </span>
                         <span class="publish-author">
                             
@@ -1233,8 +1327,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%B8%A9%E5%9D%91%E9%97%AE%E9%A2%98/">
-                        <span class="chip bg-color">踩坑问题</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
+                    </a>
+                    
+                    <a href="/tags/vue%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/">
+                        <span class="chip bg-color">vue组件通信</span>
                     </a>
                     
                 </div>
